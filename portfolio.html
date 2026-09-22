@@ -95,6 +95,30 @@
   .hero {
     padding: 72px 0 56px;
     position: relative;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap-reverse;
+  }
+  .hero-text { flex: 1 1 380px; min-width: 0; }
+  .hero-photo-wrap {
+    flex: 0 0 auto;
+    width: 148px;
+    height: 148px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(135deg, var(--accent), var(--copper));
+    position: relative;
+    z-index: 1;
+  }
+  .hero-photo-wrap img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--bg);
+    background: var(--bg-panel);
   }
   .circuit {
     position: absolute;
@@ -104,6 +128,7 @@
     height: 220px;
     opacity: 0.5;
     pointer-events: none;
+    z-index: 0;
   }
   .hero-eyebrow {
     font-family: 'JetBrains Mono', monospace;
@@ -236,6 +261,8 @@
   @media (max-width: 560px) {
     .circuit { display: none; }
     .nav-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .hero { flex-direction: column-reverse; align-items: flex-start; gap: 24px; }
+    .hero-photo-wrap { width: 108px; height: 108px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -277,12 +304,17 @@
         <circle cx="180" cy="140" r="3.2" />
       </g>
     </svg>
-    <p class="hero-eyebrow mono">Ingénieur informatique · Développeur Web</p>
-    <h1>Tchounkeu Nguia Prodige Fabiany</h1>
-    <p class="lede">Candidat motivé en informatique, orienté vers le développement embarqué et les systèmes temps réel — prêt à apporter rigueur méthodologique et capacité d'apprentissage rapide à des applications fiables et performantes.</p>
-    <div class="hero-actions">
-      <a class="btn primary" href="#projects">Voir mes projets</a>
-      <a class="btn" href="#contact">Me contacter</a>
+    <div class="hero-text">
+      <p class="hero-eyebrow mono">Ingénieur informatique · Développeur Web</p>
+      <h1>Tchounkeu Nguia Prodige Fabiany</h1>
+      <p class="lede">Candidat motivé en informatique, orienté vers le développement embarqué et les systèmes temps réel — prêt à apporter rigueur méthodologique et capacité d'apprentissage rapide à des applications fiables et performantes.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#projects">Voir mes projets</a>
+        <a class="btn" href="#contact">Me contacter</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <img src="image.webp" alt="Photo de Tchounkeu Nguia Prodige Fabiany" width="148" height="148" loading="eager">
     </div>
   </section>
 
