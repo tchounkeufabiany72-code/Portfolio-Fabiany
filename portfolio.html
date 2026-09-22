@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fabiany Tchounkeu — Développeur Web</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B120E;
+    --bg-panel: #101A14;
+    --bg-panel-raised: #142016;
+    --line: #24352A;
+    --text: #E9EFE9;
+    --text-muted: #8FA093;
+    --accent: #4ADE80;
+    --accent-dim: #2E8B57;
+    --copper: #C9A34B;
+    --radius: 3px;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  :root:not([data-theme="light"]) {
+    --bg: #0B120E;
+    --bg-panel: #101A14;
+    --bg-panel-raised: #142016;
+    --line: #24352A;
+    --text: #E9EFE9;
+    --text-muted: #8FA093;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0B120E;
+      --bg-panel: #101A14;
+      --bg-panel-raised: #142016;
+      --line: #24352A;
+      --text: #E9EFE9;
+      --text-muted: #8FA093;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---- Nav ---- */
+  header.site-nav {
+    position: sticky;
+    top: 0;
+    top: env(safe-area-inset-top, 0px);
+    background: rgba(11,18,14,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+    z-index: 10;
+  }
+  .nav-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .nav-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  nav.links { display: flex; gap: 20px; font-size: 0.88rem; }
+  nav.links a { color: var(--text-muted); }
+  nav.links a:hover { color: var(--accent); text-decoration: none; }
+
+  /* ---- Hero ---- */
+  .hero {
+    padding: 72px 0 56px;
+    position: relative;
+  }
+  .circuit {
+    position: absolute;
+    top: 0;
+    right: -40px;
+    width: 220px;
+    height: 220px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    font-size: 0.85rem;
+    margin: 0 0 14px;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 2.9rem);
+    line-height: 1.15;
+    margin: 0 0 18px;
+    max-width: 14ch;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .hero p.lede {
+    color: var(--text-muted);
+    max-width: 62ch;
+    font-size: 1.05rem;
+    margin: 0 0 30px;
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    padding: 11px 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--accent-dim);
+    color: var(--text);
+    background: var(--bg-panel);
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover { border-color: var(--accent); background: var(--bg-panel-raised); text-decoration: none; }
+  .btn.primary { background: var(--accent); color: #0B120E; border-color: var(--accent); font-weight: 500; }
+  .btn.primary:hover { background: #5EE895; }
+
+  /* ---- Section shell ---- */
+  section { padding: 52px 0; border-top: 1px solid var(--line); }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--copper);
+    font-size: 0.85rem;
+  }
+  h2 { font-size: 1.5rem; margin: 0; font-weight: 700; }
+
+  /* ---- About ---- */
+  .about-body { color: var(--text-muted); max-width: 66ch; font-size: 1rem; }
+  .about-body p { margin: 0 0 14px; }
+
+  /* ---- Skills ---- */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .skill-cell {
+    background: var(--bg-panel);
+    padding: 18px 16px;
+  }
+  .skill-cell .k {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .skill-cell .v { font-size: 0.98rem; }
+
+  /* ---- Projects ---- */
+  .project {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-bottom: 16px;
+    background: var(--bg-panel);
+    position: relative;
+    transition: border-color 0.15s ease;
+  }
+  .project:hover { border-color: var(--accent-dim); }
+  .project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .project h3 { margin: 0; font-size: 1.12rem; }
+  .project-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--copper);
+    border: 1px solid var(--copper);
+    padding: 3px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .project p { margin: 0; color: var(--text-muted); font-size: 0.96rem; max-width: 68ch; }
+
+  /* ---- Contact ---- */
+  .contact-list { display: flex; flex-direction: column; gap: 10px; }
+  .contact-row {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    font-size: 1rem;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .contact-row:last-child { border-bottom: none; }
+  .contact-row .k {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    width: 90px;
+    flex-shrink: 0;
+  }
+
+  footer {
+    padding: 30px 24px 40px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  @media (max-width: 560px) {
+    .circuit { display: none; }
+    .nav-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <span class="nav-mark">FT_/portfolio</span>
+    <nav class="links">
+      <a href="#about">À propos</a>
+      <a href="#skills">Compétences</a>
+      <a href="#projects">Projets</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero" style="border-top:none;">
+    <svg class="circuit" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="none" stroke="#4ADE80" stroke-width="1.4">
+        <path d="M10 30 H90 V70 H160" />
+        <path d="M20 90 H60 V150 H130 V190" />
+        <path d="M150 20 V60 H200" />
+        <path d="M100 100 H180 V140" />
+      </g>
+      <g fill="#4ADE80">
+        <circle cx="10" cy="30" r="3.2" />
+        <circle cx="160" cy="70" r="3.2" />
+        <circle cx="20" cy="90" r="3.2" />
+        <circle cx="130" cy="190" r="3.2" />
+        <circle cx="150" cy="20" r="3.2" />
+        <circle cx="200" cy="60" r="3.2" />
+        <circle cx="180" cy="140" r="3.2" />
+      </g>
+    </svg>
+    <p class="hero-eyebrow mono">Ingénieur informatique · Développeur Web</p>
+    <h1>Tchounkeu Nguia Prodige Fabiany</h1>
+    <p class="lede">Candidat motivé en informatique, orienté vers le développement embarqué et les systèmes temps réel — prêt à apporter rigueur méthodologique et capacité d'apprentissage rapide à des applications fiables et performantes.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#projects">Voir mes projets</a>
+      <a class="btn" href="#contact">Me contacter</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-head">
+      <span class="section-num mono">§1</span>
+      <h2>À propos</h2>
+    </div>
+    <div class="about-body">
+      <p>Je suis un candidat motivé en informatique, orienté vers le développement embarqué et les systèmes temps réel, prêt à lancer ma carrière dans ce domaine exigeant.</p>
+      <p>Je souhaite apporter une capacité d'apprentissage rapide, une rigueur méthodologique et une volonté de contribuer à la fiabilité des applications temps réel, en respectant les contraintes de performance et de sécurité.</p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-head">
+      <span class="section-num mono">§2</span>
+      <h2>Compétences</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-cell"><span class="k mono">LANGAGE</span><span class="v">HTML</span></div>
+      <div class="skill-cell"><span class="k mono">LANGAGE</span><span class="v">CSS</span></div>
+      <div class="skill-cell"><span class="k mono">LANGAGE</span><span class="v">Python</span></div>
+      <div class="skill-cell"><span class="k mono">DONNÉES</span><span class="v">SQL</span></div>
+      <div class="skill-cell"><span class="k mono">OUTIL</span><span class="v">Visual Studio Code</span></div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-head">
+      <span class="section-num mono">§3</span>
+      <h2>Projets</h2>
+    </div>
+
+    <div class="project">
+      <div class="project-top">
+        <h3>Maillots Shop</h3>
+        <span class="project-tag">E-commerce</span>
+      </div>
+      <p>Boutique en ligne spécialisée dans la vente de maillots de football, actuels ou rétro — chaque article sélectionné avec soin pour garantir qualité et authenticité aux passionnés du ballon rond.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-top">
+        <h3>Profil Fictif</h3>
+        <span class="project-tag">Page personnelle</span>
+      </div>
+      <p>Un profil de présentation conçu pour mettre en avant des compétences et des centres d'intérêt de façon claire et structurée.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-top">
+        <h3>Fabiany Cook</h3>
+        <span class="project-tag">Restaurant</span>
+      </div>
+      <p>Site vitrine pour un restaurant proposant des menus variés et des boissons énergétiques, dans un cadre agréable et à prix accessible.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-top">
+        <h3>Restaurant Éclat</h3>
+        <span class="project-tag">Restaurant</span>
+      </div>
+      <p>Restaurant haut de gamme mettant en valeur l'ensemble de la structure de l'établissement ainsi que sa carte de plats.</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-head">
+      <span class="section-num mono">§4</span>
+      <h2>Contact</h2>
+    </div>
+    <div class="contact-list">
+      <div class="contact-row">
+        <span class="k mono">EMAIL</span>
+        <a href="mailto:tchounkeufabiany72@gmail.com">tchounkeufabiany72@gmail.com</a>
+      </div>
+      <div class="contact-row">
+        <span class="k mono">GITHUB</span>
+        <a href="https://github.com/tchounkeufabiany72-code" target="_blank" rel="noopener">github.com/tchounkeufabiany72-code</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2026 Tchounkeu Nguia Prodige Fabiany
+</footer>
+
+</body>
+</html>
